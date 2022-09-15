@@ -1,0 +1,4 @@
+﻿  stager2.cpp
+C:\Users\User\source\repos\stager2\stager2\stager2.cpp(9,9): warning C4477: 'printf' : format string '%x' requires an argument of type 'unsigned int', but variadic argument 1 has type 'char *'
+C:\Users\User\source\repos\stager2\stager2\stager2.cpp(10,8): warning C4101: 'size': unreferenced local variable
+  stager2.vcxproj -> C:\Users\User\source\repos\stager2\Debug\stager2.exe
